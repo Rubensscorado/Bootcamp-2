@@ -23,9 +23,11 @@ jobs:
         run: npm install || true
 
       - name: Validate manifest.json
-        run: |
-          if [ -f manifest.json ]; then
-            echo "✅ manifest.json found."
-          else
-            echo "❌ manifest.json missing!" && exit 1
-          fi
+  run: |
+    if [ -f My-Chrome-extension/manifest.json ]; then
+      echo "manifest.json found ✅";
+    else
+      echo "manifest.json missing! ❌";
+      exit 1;
+    fi
+
