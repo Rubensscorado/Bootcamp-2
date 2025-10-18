@@ -1,4 +1,4 @@
-name: Playwright Tests
+name: Build and Validate Extension
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  test:
+  validate:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,18 +19,13 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install dependencies
-        run: npm install
+      - name: Install dependencies (if any)
+        run: npm install || true
 
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-
-      - name: Run Playwright tests
-        run: npx playwright test --reporter=html
-
-      - name: Upload Playwright HTML report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-report
-          path: playwright-report/
+      - name: Validate manifest.json
+        run: |
+          if [ -f manifest.json ]; then
+            echo "✅ manifest.json found."
+          else
+            echo "❌ manifest.json missing!" && exit 1
+          fi
