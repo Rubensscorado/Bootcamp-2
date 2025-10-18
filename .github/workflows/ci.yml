@@ -2,9 +2,9 @@ name: Build and Validate Extension
 
 on:
   push:
-    branches: ["main"]
+    branches: [ "main" ]
   pull_request:
-    branches: ["main"]
+    branches: [ "main" ]
 
 jobs:
   validate:
@@ -21,13 +21,14 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        working-directory: My-Chrome-extension
+        working-directory: dist
 
       - name: Validate manifest.json
         run: |
-          if [ -f My-Chrome-extension/manifest.json ]; then
+          if [ -f dist/manifest.json ]; then
             echo "manifest.json found ✅"
           else
             echo "manifest.json missing! ❌"
             exit 1
           fi
+
