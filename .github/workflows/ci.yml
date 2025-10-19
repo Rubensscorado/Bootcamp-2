@@ -20,18 +20,10 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-  run: |
-    mkdir -p dist
-    npm install
-  working-directory: dist
+        run: npm install
 
+      - name: Build extension
+        run: npm run build
 
-      - name: Validate manifest.json
-        run: |
-          if [ -f dist/manifest.json ]; then
-            echo "manifest.json found ✅"
-          else
-            echo "manifest.json missing! ❌"
-            exit 1
-          fi
-
+      - name: Run Playwright tests
+        run: npx playwright test
